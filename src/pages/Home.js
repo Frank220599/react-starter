@@ -7,16 +7,16 @@ import {todoSelectors} from "../store/selectors";
 const Home = ({LoadAllTodos, todos}) => {
     return (
         <div>
-            <button onClick={LoadAllTodos}>asdas</button>
-            {
-                todos.map(todo => {
-                    return (
-                        <div>
-                            <p>Title {todo.title}</p>
-                            <p>completed {todo.completed.toString()}</p>
-                        </div>)
-                })
-            }
+            {/*<button onClick={LoadAllTodos}>asdas</button>*/}
+            {/*{*/}
+            {/*    todos.map(todo => {*/}
+            {/*        return (*/}
+            {/*            <div>*/}
+            {/*                <p>Title {todo.title}</p>*/}
+            {/*                <p>completed {todo.completed.toString()}</p>*/}
+            {/*            </div>)*/}
+            {/*    })*/}
+            {/*}*/}
         </div>
     );
 };
