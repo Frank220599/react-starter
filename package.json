@@ -5,23 +5,38 @@
   "description": "React Starter",
   "author": "Farrux Zokirov (https://github.com/Frank220599)",
   "dependencies": {
+    "@sentry/browser": "5.15.5",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "0.19.2",
+    "classnames": "2.2.6",
     "history": "4.10.1",
+    "js-query-builder": "0.2.1",
     "lodash": "4.17.15",
+    "node-sass": "4.13.1",
     "normalizr": "3.6.0",
+    "nouislider-react": "3.3.7",
+    "qs": "latest",
+    "query-string": "6.12.1",
     "react": "^16.13.1",
+    "react-custom-scrollbars": "4.2.1",
     "react-dom": "^16.13.1",
+    "react-id-swiper": "3.0.0",
+    "react-photoswipe": "1.3.0",
     "react-redux": "7.2.0",
     "react-router": "5.1.2",
     "react-router-dom": "5.1.2",
+    "react-router-redux": "4.0.8",
     "react-scripts": "3.4.1",
+    "react-transition-group": "4.3.0",
     "redux": "4.0.5",
     "redux-saga": "1.1.3",
     "redux-saga-routines": "3.2.2",
-    "reselect": "4.0.0"
+    "require-context": "1.1.0",
+    "reselect": "4.0.0",
+    "swiper": "5.3.6",
+    "wnumb": "1.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -45,9 +60,6 @@
     ]
   },
   "devDependencies": {
-    "reactotron-react-js": "3.3.7",
-    "reactotron-redux": "3.1.3",
-    "reactotron-redux-saga": "4.2.3",
     "redux-devtools-extension": "2.13.8",
     "redux-logger": "3.0.6"
   }

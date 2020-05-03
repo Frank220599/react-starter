@@ -1,11 +1,10 @@
-import React from 'react';
+import React from "react";
 
-function App({children}) {
-    return (
-        <div className="App">
-            {children}
-        </div>
-    );
-}
+const App = ({children}) => (
+    <div className={'body'} >
+        {children}
+    </div>
+);
 
-export default App;
+
+export default App

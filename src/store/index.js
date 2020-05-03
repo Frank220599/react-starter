@@ -1,7 +1,8 @@
-import configure from "./configure";
-import history from "./history";
+import configureStore from './configureStore';
+import history from './history';
+
 
 export {
-    configure,
-    history
+	configureStore,
+	history
 }

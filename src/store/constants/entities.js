@@ -1,2 +1,0 @@
-export const LOAD_ENTITIES = 'LOAD_ENTITIES';
-export const UPDATE_ENTITIES = 'UPDATE_ENTITIES';

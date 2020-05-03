@@ -1,9 +1,9 @@
 import {combineReducers} from "redux";
-import todos from "./todos";
-import entities from "./entities";
+import entity from "../../base/EntityContainer/reducer"
+import entities from "./entity"
 
 const rootReducer = combineReducers({
-    todos,
+    entity,
     entities
 });
 

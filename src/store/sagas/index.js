@@ -1,9 +1,9 @@
 import {fork, all} from "redux-saga/effects"
-
-import todo from './todos'
+import EntitySaga from "../../base/EntityContainer/saga";
 
 export default function* rootSaga() {
     yield all([
-        fork((todo))
+        fork(EntitySaga)
     ])
 }
+
