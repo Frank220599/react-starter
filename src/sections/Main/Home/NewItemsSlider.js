@@ -64,13 +64,17 @@ const NewItemsSlider = () => {
                         </div>
                         <div className="col-12">
                             <div className={"home__carousel"}>
-                                <EntityContainer.All entity={'movies'} name={'All'} url={'/movies'}>
+                                <EntityContainer.All entity={'movies'} name={'MovieSlider'} url={'/movies'}>
                                     {({items, isFetched}) => (
                                         <Swiper {...params} getSwiper={updateSwiper}>
                                             {items.map((movie, index) => {
                                                 return (
                                                     <div className="item">
-                                                        <MovieItem.Ordinary big={true} title={movie.title}/>
+                                                        <MovieItem.Ordinary
+                                                            big={true}
+                                                            title={movie.title}
+                                                            cover={movie.cover}
+                                                        />
                                                     </div>
                                                 )
                                             })}

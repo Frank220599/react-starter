@@ -1,10 +1,14 @@
-import React from "react";
+import React, {Component} from "react";
 
-const App = ({children}) => (
-    <div className={'body'} >
-        {children}
-    </div>
-);
+class App extends Component {
+    render() {
+        return (
+            <div className={'body'}>
+                {this.props.children}
+            </div>
+        )
+    }
+}
 
 
 export default App

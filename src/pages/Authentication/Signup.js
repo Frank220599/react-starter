@@ -13,14 +13,19 @@ const Signup = () => {
                                     <img src={require("../../assets/images/logo.svg")} alt=""/>
                                 </Link>
                                 <div className="sign__group">
-                                    <input type="text" className="sign__input" placeholder="Name"/>
+                                    <input type="text" className="sign__input" placeholder="First name"/>
                                 </div>
-
+                                <div className="sign__group">
+                                    <input type="text" className="sign__input" placeholder="Last name"/>
+                                </div>
                                 <div className="sign__group">
                                     <input type="text" className="sign__input" placeholder="Email"/>
                                 </div>
                                 <div className="sign__group">
                                     <input type="password" className="sign__input" placeholder="Password"/>
+                                </div>
+                                <div className="sign__group">
+                                    <input type="password" className="sign__input" placeholder="Confirm Password"/>
                                 </div>
                                 <div className="sign__group sign__group--checkbox">
                                     <input id="remember" name="remember" type="checkbox" checked="checked"/>

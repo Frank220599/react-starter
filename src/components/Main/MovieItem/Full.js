@@ -1,14 +1,24 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import ProgressiveImage from "react-progressive-image";
 
-const Full = ({id}) => {
+const Full = ({id, cover}) => {
     return (
         <div className="col-6 col-sm-12 col-lg-6">
             <div className="card card--list">
                 <div className="row">
                     <div className="col-12 col-sm-4">
                         <div className="card__cover">
-                            <img src={require("../../../assets/images/covers/cover.jpg")} alt=""/>
+                            <ProgressiveImage
+                                src={cover}
+                                // placeholder={tinyImgPath}
+                            >
+                                {(src, loading) => <img src={src} style={{
+                                    opacity: loading ? ".5" : "1",
+                                    filter: loading ? "blur(10px)" : "",
+                                    transition: ".1s"
+                                }} alt="" />}
+                            </ProgressiveImage>
                             <Link to={'/movies/1'} href="#" className="card__play">
                                 <i className="icon ion-ios-play"/>
                             </Link>

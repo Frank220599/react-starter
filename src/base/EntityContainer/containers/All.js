@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
+import isEqual from "lodash/isEqual";
+
 import {bindActionCreators} from "redux";
 import EntityActions from "../actions";
 import EntitySelectors from "../selectors"
-import isEqual from "lodash/isEqual"
 
 class All extends Component {
     componentDidMount() {
-        const {name, entity, url, params, FetchAll, appendIds} = this.props;
-        this.Fetch(entity, name, url, params, appendIds );
+        const {name, entity, url, params, appendIds} = this.props;
+        this.Fetch(entity, name, url, params, appendIds);
     }
 
     componentDidUpdate(prevProps) {

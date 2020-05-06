@@ -1,18 +1,28 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import cx from "classnames";
 import Nouislider from "nouislider-react";
 import "nouislider/distribute/nouislider.css";
 import wNumb from 'wnumb'
 import {EntityContainer} from "../../../base/EntityContainer";
+import qs from "query-string";
+import {withRouter} from "react-router";
 
-
-const Filter = () => {
+const Filter = (props) => {
 
     const [isOpen, setIsOpen] = useState({});
     const [year, setYear] = useState({from: 2005, to: 2015});
     const [rating, setRating] = useState({from: 2.5, to: 8.6});
     const dropdownHandler = index => {
         setIsOpen({[index]: !isOpen[index]});
+    };
+    const applyFilters = () => {
+        const {history, location} = props;
+        const query = qs.parse(location.search);
+        const search = {...query, year: [year.from, year.to]};
+
+        history.push({
+            search: qs.stringify(search)
+        });
     };
     return (
         <div className="filter">
@@ -118,7 +128,7 @@ const Filter = () => {
                                     </div>
                                 </div>
                             </div>
-                            <button className="filter__btn">apply filter</button>
+                            <button onClick={applyFilters} className="filter__btn">apply filter</button>
                         </div>
                     </div>
                 </div>
@@ -128,4 +138,4 @@ const Filter = () => {
 };
 
 
-export default Filter;
+export default withRouter(Filter);

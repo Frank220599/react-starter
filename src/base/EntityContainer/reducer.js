@@ -8,7 +8,7 @@ const initialState = {};
 export default (state = initialState, action) => {
     switch (action.type) {
         case EntityActions.FetchAll.REQUEST: {
-            const {name, entity} = action.payload;
+            const {name, entity,} = action.payload;
             return {
                 ...state,
                 [entity]: {
@@ -24,8 +24,8 @@ export default (state = initialState, action) => {
             const {entity, name, ids, meta, appendIds, prependIds, params: {filter, extra}} = action.payload;
             const isNewFilter = !isEqual({filter, extra}, get(state, `${entity}.${name}.params`, {}));
             const oldIds = appendIds || prependIds ? get(state, `${entity}.${name}.ids`, []) : [];
-            const stateCurrentPage = get(state, `${entity}.${name}.meta.current_page`, 1);
-            const newIds = isNewFilter ? [...ids] : (appendIds ? [...oldIds, ...ids] : prependIds ? [...ids, ...oldIds] : [...ids]);
+            const stateCurrentPage = get(state, `${entity}.${name}.meta.currentPage`, 1);
+            const newIds = isNewFilter ? [...ids] : (appendIds && (meta.currentPage !== 1) ? [...oldIds, ...ids] : prependIds ? [...ids, ...oldIds] : [...ids]);
             return {
                 ...state,
                 [entity]: {
@@ -33,11 +33,8 @@ export default (state = initialState, action) => {
                     [name]: {
                         ...get(state, `${entity}.${name}`, {}),
                         ids: uniq(newIds),
-                        meta: {
-                            ...meta,
-                            current_page: meta.current_page > stateCurrentPage ? meta.current_page : stateCurrentPage,
-                        },
-                        params: { filter, extra},
+                        meta,
+                        params: {filter, extra},
                         isFetched: true,
                     }
                 }

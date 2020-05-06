@@ -1,11 +1,22 @@
 import React from 'react';
+import ProgressiveImage from "react-progressive-image";
 import {Link} from "react-router-dom";
 
 const Ordinary = ({big, recommendation, title, cover}) => {
     const component = (
         <div className={`card ${big ? "card--big" : ''}`}>
             <div className="card__cover">
-                <img src={require("../../../assets/images/covers/cover.jpg")} alt=""/>
+                <ProgressiveImage
+                    src={cover}
+                    // placeholder={tinyImgPath}
+                >
+                    {(src, loading) => <img src={src} style={{
+                        opacity: loading ? ".5" : "1",
+                        filter: loading ? "blur(10px)" : "",
+                        transition: ".1s"
+                    }} alt="" />}
+                </ProgressiveImage>
+
                 <Link to={'/movies/1'} className="card__play">
                     <i className="icon ion-ios-play"/>
                 </Link>
