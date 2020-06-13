@@ -11,18 +11,18 @@ const Language = () => {
     }, []);
     return (
         <div className="dropdown header__lang">
-            <a
+            <span
+                style={{cursor: 'pointer'}}
                 onClick={() => setIsOpen(!isOpen)}
                 className="dropdown-toggle header__nav-link"
-                href="#"
-            >EN</a>
+            >EN</span>
 
             <ul
                 className={`dropdown-menu header__dropdown-menu lang ${isOpen && 'show'}`}
             >
-                <li onClick={() => console.log('dsafa')}><a href="#">English</a></li>
-                <li><a href="#">Spanish</a></li>
-                <li><a href="#">Russian</a></li>
+                <li onClick={() => console.log('dsafa')}>English</li>
+                <li>Spanish</li>
+                <li>Russian</li>
             </ul>
         </div>
     );

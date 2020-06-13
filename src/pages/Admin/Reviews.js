@@ -19,7 +19,7 @@ const Reviews = () => {
                                  id="admin-filter-sort"
                                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <input type="button" value="Date created"/>
-                                <span></span>
+                                <span/>
                             </div>
 
                             <ul className="admin-filter__item-menu dropdown-menu scrollbar-dropdown"
@@ -61,8 +61,6 @@ const Reviews = () => {
                     </table>
                 </div>
             </div>
-
-            <Pagination/>
 
         </>
     );

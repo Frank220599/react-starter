@@ -9,9 +9,9 @@ const Header = () => {
                     <img src={require('../../assets/images/logo.svg')} alt=""/>
                 </NavLink>
                 <button className="admin-header__btn" type="button">
-                    <spa/>
-                    <spa/>
-                    <spa/>
+                    <span/>
+                    <span/>
+                    <span/>
                 </button>
             </div>
         </header>

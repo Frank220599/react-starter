@@ -42,7 +42,7 @@ const MovieDetailsTab = ({children}) => {
                 <div className="container">
                     <div className="row">
                         <div className="col-12">
-                            <h2 className="content__title">New items</h2>
+                            <h2 className="content__title">Discover</h2>
                             <TabButtons/>
                             <div className="content__mobile-tabs">
                                 <div className="content__mobile-tabs-btn">
@@ -63,7 +63,7 @@ const MovieDetailsTab = ({children}) => {
                         <div className="tab-content">
                             {
                                 links.map((link, index) => (
-                                    <Transition in={isOpen[index]}>
+                                    <Transition in={isOpen[index]} timeout={30}>
                                         {(state) => (
                                             <div
                                                 style={{

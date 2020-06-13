@@ -98,6 +98,20 @@ export default (state = initialState, action) => {
                 }
             };
         }
+        case EntityActions.DeleteOne.SUCCESS: {
+            const {entity, name, id} = action.payload;
+            return {
+                ...state,
+                [entity]: {
+                    ...get(state, entity, {}),
+                    [name]: {
+                        ...get(state, `${entity}.${name}`, {}),
+                        ids: state[entity][name].ids.filter(itemId => itemId !== id),
+                    }
+                }
+            }
+        }
+
         default:
             return state
     }

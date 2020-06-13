@@ -1,6 +1,14 @@
 import React from 'react';
 
 const OurPartners = () => {
+    const partners = [
+        require("../../../assets/images/partners/themeforest-light-background.png"),
+        require("../../../assets/images/partners/audiojungle-light-background.png"),
+        require("../../../assets/images/partners/codecanyon-light-background.png"),
+        require("../../../assets/images/partners/photodune-light-background.png"),
+        require("../../../assets/images/partners/activeden-light-background.png"),
+        require("../../../assets/images/partners/3docean-light-background.png")
+    ];
     return (
         <section className="section">
             <div className="container">
@@ -14,60 +22,20 @@ const OurPartners = () => {
                             page when looking at its layout. The point of using Lorem Ipsum is that it has a
                             more-or-less normal distribution of letters, as opposed to using.</p>
                     </div>
-                    <div className="col-6 col-sm-4 col-md-3 col-lg-2">
-                        <a href="#" className="partner">
-                            <img
-                                src={require("../../../assets/images/partners/themeforest-light-background.png")}
-                                alt=""
-                                className="partner__img"
-                            />
-                        </a>
-                    </div>
-                    <div className="col-6 col-sm-4 col-md-3 col-lg-2">
-                        <a href="#" className="partner">
-                            <img
-                                src={require("../../../assets/images/partners/audiojungle-light-background.png")}
-                                alt=""
-                                className="partner__img"
-                            />
-                        </a>
-                    </div>
-                    <div className="col-6 col-sm-4 col-md-3 col-lg-2">
-                        <a href="#" className="partner">
-                            <img
-                                src={require("../../../assets/images/partners/codecanyon-light-background.png")}
-                                alt=""
-                                className="partner__img"
-                            />
-                        </a>
-                    </div>
-                    <div className="col-6 col-sm-4 col-md-3 col-lg-2">
-                        <a href="#" className="partner">
-                            <img
-                                src={require("../../../assets/images/partners/photodune-light-background.png")}
-                                alt=""
-                                className="partner__img"
-                            />
-                        </a>
-                    </div>
-                    <div className="col-6 col-sm-4 col-md-3 col-lg-2">
-                        <a href="#" className="partner">
-                            <img
-                                src={require("../../../assets/images/partners/activeden-light-background.png")}
-                                alt=""
-                                className="partner__img"
-                            />
-                        </a>
-                    </div>
-                    <div className="col-6 col-sm-4 col-md-3 col-lg-2">
-                        <a href="#" className="partner">
-                            <img
-                                src={require("../../../assets/images/partners/3docean-light-background.png")}
-                                alt=""
-                                className="partner__img"
-                            />
-                        </a>
-                    </div>
+
+                    {
+                        partners.map((src, index) => (
+                            <div key={index} className="col-6 col-sm-4 col-md-3 col-lg-2">
+                                <a href="#" className="partner">
+                                    <img
+                                        src={src}
+                                        alt=""
+                                        className="partner__img"
+                                    />
+                                </a>
+                            </div>
+                        ))
+                    }
                 </div>
             </div>
         </section>

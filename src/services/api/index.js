@@ -2,6 +2,7 @@ import axios from 'axios';
 import {query} from 'js-query-builder';
 import qs from "qs"
 import config from '../../config';
+import storage from "../storage";
 
 const request = axios.create({
     baseURL: config.API_ROOT
@@ -12,6 +13,10 @@ request.defaults.params['_f'] = 'json';
 request.defaults.headers.common['Accept'] = 'application/json';
 request.defaults.headers.common['Content-Type'] = 'application/json; charset=utf-8';
 
+let token = storage.get('token');
+if (token) {
+    request.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
 
 const queryBuilder = (url, {fields = [], include = [], limit = 0, sort = '', filter = {}, page = 1, extra = {}} = {}) => {
 

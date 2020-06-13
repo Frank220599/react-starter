@@ -1,11 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
 import Search from "./Search";
 import Navigation from "./Navigation";
 import Language from "./Language";
 import {NavLink} from "react-router-dom";
+import {connect} from "react-redux";
 
-const Header = () => {
+const Header = ({user}) => {
     const [isSearchActive, setIsSearchActive] = useState(false);
     return (
         <header className="header">
@@ -26,10 +27,17 @@ const Header = () => {
                                         <i className="icon ion-ios-search"/>
                                     </button>
                                     <Language/>
-                                    <NavLink to={"/auth/signin"} className="header__sign-in">
-                                        <i className="icon ion-ios-log-in"/>
-                                        <span>sign in</span>
-                                    </NavLink>
+                                    {
+                                        user.isAuthenticated ?
+                                            <NavLink to={"/user/profile/settings"} className="header__sign-in">
+                                                <i className="icon ion-ios-log-in"/>
+                                                <span>profile</span>
+                                            </NavLink>
+                                            : <NavLink to={"/auth/signin"} className="header__sign-in">
+                                                <i className="icon ion-ios-log-in"/>
+                                                <span>sign in</span>
+                                            </NavLink>
+                                    }
                                 </div>
                                 <button className="header__btn" type="button">
                                     <span/>
@@ -41,9 +49,13 @@ const Header = () => {
                     </div>
                 </div>
             </div>
-            <Search isOpen={isSearchActive}/>
+            <Search isOpen={isSearchActive} setIsOpen={setIsSearchActive}/>
         </header>
     );
 };
 
-export default Header;
+const mapStateToProps = state => ({
+    user: state.system.user
+});
+
+export default connect(mapStateToProps)(Header);

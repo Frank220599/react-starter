@@ -2,7 +2,7 @@ import React from 'react';
 import ProgressiveImage from "react-progressive-image";
 import {Link} from "react-router-dom";
 
-const Ordinary = ({big, recommendation, title, cover}) => {
+const Ordinary = ({id, big, recommendation, title, cover, rating}) => {
     const component = (
         <div className={`card ${big ? "card--big" : ''}`}>
             <div className="card__cover">
@@ -14,20 +14,20 @@ const Ordinary = ({big, recommendation, title, cover}) => {
                         opacity: loading ? ".5" : "1",
                         filter: loading ? "blur(10px)" : "",
                         transition: ".1s"
-                    }} alt="" />}
+                    }} alt=""/>}
                 </ProgressiveImage>
 
-                <Link to={'/movies/1'} className="card__play">
+                <Link to={`/movies/${id}`} className="card__play">
                     <i className="icon ion-ios-play"/>
                 </Link>
             </div>
             <div className="card__content">
-                <h3 className="card__title"><Link to={"/movies/1"} href="#">{title}</Link></h3>
+                <h3 className="card__title"><Link to={`/movies/${id}`} href="#">{title}</Link></h3>
                 <span className="card__category">
                     <a href="#">Action</a>
                     <a href="#">Triler</a>
                 </span>
-                <span className="card__rate"><i className="icon ion-ios-star"/>8.4</span>
+                <span className="card__rate"><i className="icon ion-ios-star"/>{rating}</span>
             </div>
         </div>
     );

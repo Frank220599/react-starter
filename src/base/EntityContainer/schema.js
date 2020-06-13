@@ -1,5 +1,7 @@
 import {schema} from 'normalizr';
 
-export default (entityName, idAttribute = 'id') => {
+const EntitySchema = (entityName, idAttribute = 'id') => {
     return new schema.Entity(entityName,undefined,{idAttribute});
 };
+
+export default EntitySchema

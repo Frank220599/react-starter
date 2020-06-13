@@ -46,10 +46,10 @@ const NewItemsSlider = () => {
         return (
             <section className="home">
                 <div className="owl-carousel home__bg">
-                    <div className="item home__cover" data-bg="img/home/home__bg.jpg"></div>
-                    <div className="item home__cover" data-bg="img/home/home__bg2.jpg"></div>
-                    <div className="item home__cover" data-bg="img/home/home__bg3.jpg"></div>
-                    <div className="item home__cover" data-bg="img/home/home__bg4.jpg"></div>
+                    <div className="item home__cover" data-bg="img/home/home__bg.jpg"/>
+                    <div className="item home__cover" data-bg="img/home/home__bg2.jpg"/>
+                    <div className="item home__cover" data-bg="img/home/home__bg3.jpg"/>
+                    <div className="item home__cover" data-bg="img/home/home__bg4.jpg"/>
                 </div>
                 <div className="container">
                     <div className="row">
@@ -69,11 +69,13 @@ const NewItemsSlider = () => {
                                         <Swiper {...params} getSwiper={updateSwiper}>
                                             {items.map((movie, index) => {
                                                 return (
-                                                    <div className="item">
+                                                    <div className="item" key={movie.id}>
                                                         <MovieItem.Ordinary
+                                                            id={movie.id}
                                                             big={true}
                                                             title={movie.title}
                                                             cover={movie.cover}
+                                                            rating={movie.rating}
                                                         />
                                                     </div>
                                                 )

@@ -129,6 +129,7 @@ const Filter = (props) => {
                                 </div>
                             </div>
                             <button onClick={applyFilters} className="filter__btn">apply filter</button>
+                            <button onClick={applyFilters} className="filter__btn">Reset Filter</button>
                         </div>
                     </div>
                 </div>

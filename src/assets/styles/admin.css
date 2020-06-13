@@ -711,7 +711,7 @@ ul {
 .main__table-wrap {
     position: relative;
     width: 100%;
-    overflow: hidden;
+    overflow-x: scroll;
 }
 
 .main__table {
@@ -824,6 +824,7 @@ ul {
 }
 
 .main__table-btn {
+    cursor: pointer;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -1107,6 +1108,7 @@ ul {
 
 .dashbox__refresh {
     display: flex;
+    cursor: pointer;
     flex-direction: row;
     justify-content: center;
     align-items: center;
@@ -2969,6 +2971,7 @@ ul {
 
 .custom-modal {
     z-index: 99999;
+    /*min-width: 50%;*/
 }
 
 

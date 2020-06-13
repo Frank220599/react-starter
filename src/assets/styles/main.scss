@@ -401,15 +401,16 @@ ul {
   padding: 0;
 }
 
-.header__dropdown-menu a {
+.header__dropdown-menu li {
   font-size: 16px;
   color: rgba(255, 255, 255, 0.75);
   line-height: 40px;
   display: block;
   font-weight: 300;
+  cursor: pointer;
 }
 
-.header__dropdown-menu a:hover {
+.header__dropdown-menu li:hover {
   color: #ff55a5;
 }
 
@@ -629,6 +630,8 @@ ul {
   min-width: 122px;
   margin-top: -10px;
 }
+
+
 
 .header__lang .header__dropdown-menu.show {
   margin-top: 0;
@@ -1570,7 +1573,16 @@ ul {
   margin-bottom: 30px;
 }
 
+.card--big .card__cover {
+  height: 365px;
+  width: 250px;
+  overflow: hidden;
+}
+
 .card__cover {
+  height: 230px;
+  width: 160px;
+  overflow: hidden;
   position: relative;
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -2419,6 +2431,7 @@ ul {
 }
 
 .price__btn {
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -4750,3 +4763,6 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
   max-height: 999px;
 }
 
+.validation-error {
+  color: #ffffff;
+}

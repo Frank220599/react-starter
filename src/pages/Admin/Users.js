@@ -2,10 +2,50 @@ import React, {useState} from 'react';
 import Pagination from "../../components/Admin/Pagination";
 import UserItem from "../../components/Admin/UserItem";
 import {EntityContainer} from "../../base/EntityContainer";
+import qs from "query-string";
+import {ReduxContainer} from "../../base/ReduxContainer";
+import {withRouter} from "react-router";
+import Modal from "../../components/Admin/Modal";
+import {connect} from "react-redux";
+import {UserDelete, UserSetStatus} from "../../store/actions/system";
 
-const Users = () => {
+const Users = (props) => {
+    const [modalOptions, setModalOptions] = useState({});
+    const paginate = (page) => {
+        const {history, location} = props;
+        const query = qs.parse(location.search);
+        const search = {...query, page: page};
+
+        history.push({
+            search: qs.stringify(search)
+        });
+    };
+    const {location} = props;
+    const query = qs.parse(location.search);
+    const deleteUser = (id) => {
+        props.dispatch(
+            UserDelete(id, setModalOptions({}))
+        )
+    };
+    const setStatus = (id, status) => {
+        props.dispatch(
+            UserSetStatus({id, status: !status}, setModalOptions({}))
+        )
+    };
     return (
         <>
+            <Modal.Delete
+                isOpen={modalOptions.deleteModal}
+                closeModal={() => setModalOptions({deleteModal: false, id: null})}
+                itemName={'User'}
+                deleteItem={() => deleteUser(modalOptions.id)}
+            />
+            <Modal.Status
+                isOpen={modalOptions.statusModal}
+                closeModal={() => setModalOptions({statusModal: false, id: null})}
+                itemName={'User'}
+                setStatus={() => setStatus(modalOptions.id, modalOptions.status)}
+            />
             <div className="col-12">
                 <div className="main__title">
                     <h2>Users</h2>
@@ -59,29 +99,50 @@ const Users = () => {
                         </thead>
 
                         <tbody>
-                        <EntityContainer.All entity={'users'} name={'All'} url={'/users?include=subscription'}>
+                        <EntityContainer.All
+                            entity={'users'}
+                            name={'All'}
+                            url={'/users'}
+                            params={{limit: 20, page: query.page, include: 'subscription,comments,reviews'}}
+                        >
                             {({items, isFetched}) => (
-                                items.map(user => (
-                                    <UserItem
-                                        id={user.id}
-                                        email={user.email}
-                                        subscription={user.subscription.name}
-                                        status={user.status}
-                                        createdAt={user.timestamp.createdAt}
-                                        firstName={user.firstName}
-                                        lastName={user.lastName}
-                                    />
-                                ))
+                                items.map(user => {
+                                    if (user.id === props.user.id) return null;
+                                    return (
+                                        <UserItem
+                                            key={user.id}
+                                            id={user.id}
+                                            email={user.email}
+                                            subscription={user.subscription.name}
+                                            status={user.status}
+                                            createdAt={user.timestamp.createdAt}
+                                            firstName={user.firstName}
+                                            lastName={user.lastName}
+                                            onFunction={setModalOptions}
+                                            commentsCount={user.comments.length}
+                                            reviewsCount={user.reviews.length}
+                                        />
+                                    )
+                                })
                             )}
                         </EntityContainer.All>
                         </tbody>
                     </table>
+                    <ReduxContainer.All entity={'users'} name={'All'}>
+                        {({isFetched, meta}) => (
+                            <>
+                                {isFetched && <Pagination meta={meta} limit={20} paginate={paginate}/>}
+                            </>
+                        )}
+                    </ReduxContainer.All>
                 </div>
             </div>
-            {/*<Pagination metadata={meta} setPage={setPage}/>*/}
         </>
     );
 };
 
+const mapStateToProps = state => ({
+    user: state.system.user.data
+});
 
-export default Users;
+export default connect(mapStateToProps)(withRouter(Users));

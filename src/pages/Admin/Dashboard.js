@@ -1,14 +1,29 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
+import LatestUsers from "../../sections/Admin/Dashboard/LatestUsers";
+import TopItems from "../../sections/Admin/Dashboard/TopItems";
+import LatestItems from "../../sections/Admin/Dashboard/LatestItems";
+import LatestReviews from "../../sections/Admin/Dashboard/LatestReviews";
 
-const Dashboard = () => {
+import EntityActions from "../../base/EntityContainer/actions"
+import {connect} from "react-redux";
+
+const Dashboard = ({dispatch}) => {
+
+    const onRefresh = (entity, name, url, params) => {
+        dispatch(
+            EntityActions.FetchAll.request({
+                entity, name, url, params
+            })
+        )
+    };
+
     return (
         <>
             <div className="col-12">
                 <div className="main__title">
                     <h2>Dashboard</h2>
-
-                    <Link to="/admin/movie/add" className="main__title-link">add item</Link>
+                    <NavLink to="/admin/movie/add" className="main__title-link">add item</NavLink>
                 </div>
             </div>
 
@@ -32,7 +47,7 @@ const Dashboard = () => {
                 <div className="stats">
                     <span>New comments</span>
                     <p>2 573</p>
-                    <i className="icon ion-ios-chatbubbles"></i>
+                    <i className="icon ion-ios-chatbubbles"/>
                 </div>
             </div>
 
@@ -40,438 +55,20 @@ const Dashboard = () => {
                 <div className="stats">
                     <span>New reviews</span>
                     <p>1 021</p>
-                    <i className="icon ion-ios-star-half"></i>
+                    <i className="icon ion-ios-star-half"/>
                 </div>
             </div>
 
-            <div className="col-12 col-xl-6">
-                <div className="dashbox">
-                    <div className="dashbox__title">
-                        <h3><i className="icon ion-ios-trophy"></i> Top items</h3>
+            <TopItems onRefresh={onRefresh}/>
 
-                        <div className="dashbox__wrap">
-                            <a className="dashbox__refresh" href="#"><i
-                                className="icon ion-ios-refresh"></i></a>
-                            <a className="dashbox__more" href="catalog.html">View All</a>
-                        </div>
-                    </div>
+            <LatestItems onRefresh={onRefresh}/>
 
-                    <div className="dashbox__table-wrap">
-                        <table className="main__table main__table--dash">
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>TITLE</th>
-                                <th>CATEGORY</th>
-                                <th>RATING</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <div className="main__table-text">321</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">I Dream in Another Language</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">Movie</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text main__table-text--rate"><i
-                                        className="icon ion-ios-star"></i> 9.2
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div className="main__table-text">54</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">Benched</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">Movie</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text main__table-text--rate"><i
-                                        className="icon ion-ios-star"></i> 9.1
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div className="main__table-text">670</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">Whitney</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">TV Series</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text main__table-text--rate"><i
-                                        className="icon ion-ios-star"></i> 9.0
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div className="main__table-text">241</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">Blindspotting 2</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">TV Series</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text main__table-text--rate"><i
-                                        className="icon ion-ios-star"></i> 8.9
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div className="main__table-text">22</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">Blindspotting</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">TV Series</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text main__table-text--rate"><i
-                                        className="icon ion-ios-star"></i> 8.9
-                                    </div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+            <LatestUsers onRefresh={onRefresh}/>
 
-            <div className="col-12 col-xl-6">
-                <div className="dashbox">
-                    <div className="dashbox__title">
-                        <h3><i className="icon ion-ios-film"></i> Latest items</h3>
-
-                        <div className="dashbox__wrap">
-                            <a className="dashbox__refresh" href="#"><i
-                                className="icon ion-ios-refresh"></i></a>
-                            <a className="dashbox__more" href="catalog.html">View All</a>
-                        </div>
-                    </div>
-
-                    <div className="dashbox__table-wrap">
-                        <table className="main__table main__table--dash">
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>TITLE</th>
-                                <th>CATEGORY</th>
-                                <th>STATUS</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <div className="main__table-text">26</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">I Dream in Another Language</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">Movie</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text main__table-text--green">Visible</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div className="main__table-text">25</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">Benched</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">Movie</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text main__table-text--green">Visible</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div className="main__table-text">24</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">Whitney</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">TV Series</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text main__table-text--green">Visible</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div className="main__table-text">23</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">Blindspotting 2</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">TV Series</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text main__table-text--green">Visible</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div className="main__table-text">22</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">Blindspotting</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">TV Series</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text main__table-text--green">Visible</div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div className="col-12 col-xl-6">
-                <div className="dashbox">
-                    <div className="dashbox__title">
-                        <h3><i className="icon ion-ios-contacts"></i> Latest users</h3>
-
-                        <div className="dashbox__wrap">
-                            <a className="dashbox__refresh" href="#"><i
-                                className="icon ion-ios-refresh"></i></a>
-                            <a className="dashbox__more" href="users.html">View All</a>
-                        </div>
-                    </div>
-
-                    <div className="dashbox__table-wrap">
-                        <table className="main__table main__table--dash">
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>FULL NAME</th>
-                                <th>EMAIL</th>
-                                <th>USERNAME</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <div className="main__table-text">23</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">John Doe</div>
-                                </td>
-                                <td>
-                                    <div
-                                        className="main__table-text main__table-text--grey">email@email.com
-                                    </div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">Username</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div className="main__table-text">23</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">John Doe</div>
-                                </td>
-                                <td>
-                                    <div
-                                        className="main__table-text main__table-text--grey">email@email.com
-                                    </div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">Username</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div className="main__table-text">23</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">John Doe</div>
-                                </td>
-                                <td>
-                                    <div
-                                        className="main__table-text main__table-text--grey">email@email.com
-                                    </div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">Username</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div className="main__table-text">23</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">John Doe</div>
-                                </td>
-                                <td>
-                                    <div
-                                        className="main__table-text main__table-text--grey">email@email.com
-                                    </div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">Username</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div className="main__table-text">23</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">John Doe</div>
-                                </td>
-                                <td>
-                                    <div
-                                        className="main__table-text main__table-text--grey">email@email.com
-                                    </div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">Username</div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div className="col-12 col-xl-6">
-                <div className="dashbox">
-                    <div className="dashbox__title">
-                        <h3><i className="icon ion-ios-star-half"></i> Latest reviews</h3>
-
-                        <div className="dashbox__wrap">
-                            <a className="dashbox__refresh" href="#"><i
-                                className="icon ion-ios-refresh"></i></a>
-                            <a className="dashbox__more" href="reviews.html">View All</a>
-                        </div>
-                    </div>
-
-                    <div className="dashbox__table-wrap">
-                        <table className="main__table main__table--dash">
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>ITEM</th>
-                                <th>AUTHOR</th>
-                                <th>RATING</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <div className="main__table-text">23</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">I Dream in Another Language</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">John Doe</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text main__table-text--rate"><i
-                                        className="icon ion-ios-star"></i> 7.2
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div className="main__table-text">24</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">Benched</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">John Doe</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text main__table-text--rate"><i
-                                        className="icon ion-ios-star"></i> 6.3
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div className="main__table-text">25</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">Whitney</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">John Doe</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text main__table-text--rate"><i
-                                        className="icon ion-ios-star"></i> 8.4
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div className="main__table-text">26</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">Blindspotting</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">John Doe</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text main__table-text--rate"><i
-                                        className="icon ion-ios-star"></i> 9.0
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div className="main__table-text">27</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">I Dream in Another Language</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text">John Doe</div>
-                                </td>
-                                <td>
-                                    <div className="main__table-text main__table-text--rate">
-                                        <i className="icon ion-ios-star"/> 7.7
-                                    </div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+            <LatestReviews onRefresh={onRefresh}/>
 
         </>
     );
 };
 
-export default Dashboard;
+export default connect()(Dashboard);

@@ -9,7 +9,7 @@ function* FetchAll(action) {
     const {entity, name, url, params, appendIds} = action.payload;
     try {
         const {data} = yield call(api.request.get, api.queryBuilder(url, params));
-        const normalized = normalize(data[entity].data, [EntitySchema(entity)]);
+        const normalized = normalize(data.data, [EntitySchema(entity)]);
         yield put(Load.success(normalized.entities));
         yield put(EntityActions.FetchAll.success({
             entity,
@@ -17,7 +17,7 @@ function* FetchAll(action) {
             ids: normalized.result,
             appendIds,
             params,
-            meta: data[entity]._metadata
+            meta: data._metadata
         }))
     } catch (error) {
         yield put(EntityActions.FetchAll.failure({
@@ -45,6 +45,8 @@ function* FetchOne(action) {
         }));
     }
 }
+
+
 
 export default function* EntitySaga() {
     yield all([

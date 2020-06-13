@@ -1,7 +1,8 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import {withRouter} from "react-router";
 
-const Error = () => {
+const Error = ({history}) => {
     return (
         <div className="page-404 section--bg" data-bg="img/section/section.jpg">
             <div className="container">
@@ -11,7 +12,7 @@ const Error = () => {
                             <div className="page-404__content">
                                 <h1 className="page-404__title">404</h1>
                                 <p className="page-404__text">The page you are looking for not available!</p>
-                                <Link to={"/"} className="page-404__btn">go back</Link>
+                                <button onClick={history.goBack} className="page-404__btn">go back</button>
                             </div>
                         </div>
                     </div>
@@ -21,4 +22,4 @@ const Error = () => {
     );
 };
 
-export default Error;
+export default withRouter(Error);

@@ -28,10 +28,13 @@ const ExpectedPremiere = ({location, history}) => {
                     >
                         {({items, isFetched, meta}) => (
                             <>
-                                {items.length && items.map((movie) => {
+                                {items.length && items.map((movie, index) => {
                                     return <MovieItem.Ordinary
+                                        id={movie.id}
+                                        key={index}
                                         cover={movie.cover}
                                         title={movie.title}
+                                        rating={movie.rating}
                                     />
                                 })}
                                 {isFetched && meta.currentPage < meta.pageCount && (

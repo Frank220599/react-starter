@@ -13,7 +13,7 @@ const Subscription = () => {
                         <div className="price__item"><span>Limited Availability</span></div>
                         <div className="price__item"><span>Desktop Only</span></div>
                         <div className="price__item"><span>Limited Support</span></div>
-                        <a href="#" className="price__btn">Choose Plan</a>
+                        <span className="price__btn">Choose Plan</span>
                     </div>
                 </div>
 
@@ -26,7 +26,7 @@ const Subscription = () => {
                         <div className="price__item"><span>Lifetime Availability</span></div>
                         <div className="price__item"><span>TV & Desktop</span></div>
                         <div className="price__item"><span>24/7 Support</span></div>
-                        <a href="#" className="price__btn">Choose Plan</a>
+                        <span  className="price__btn">Choose Plan</span>
                     </div>
                 </div>
 
@@ -39,7 +39,7 @@ const Subscription = () => {
                         <div className="price__item"><span>Lifetime Availability</span></div>
                         <div className="price__item"><span>Any Device</span></div>
                         <div className="price__item"><span>24/7 Support</span></div>
-                        <a href="#" className="price__btn">Choose Plan</a>
+                        <span  className="price__btn">Choose Plan</span>
                     </div>
                 </div>
             </div>

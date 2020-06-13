@@ -1,10 +1,19 @@
 import React from 'react';
+import {NavLink, Route, withRouter} from "react-router-dom";
+import {connect} from "react-redux";
+import get from "lodash/get"
+
 import Breadcrumb from "../../components/Main/Breadcrumb";
 import Settings from "../../sections/Main/Profile/Settings";
 import Subscription from "../../sections/Main/Profile/Subscription";
-import {NavLink, Route, withRouter} from "react-router-dom";
+import {Logout} from "../../store/actions/system";
 
-const Profile = (props) => {
+const Profile = ({dispatch, history, user}) => {
+    const logout = () => {
+        dispatch(Logout(null, () => {
+            history.push('/')
+        }))
+    };
     return (
         <>
             <Breadcrumb pageName={'My FlixGo'} linkName={'Profile'}/>
@@ -19,8 +28,8 @@ const Profile = (props) => {
                                             <img src={require("../../assets/images/user.svg")} alt=""/>
                                         </div>
                                         <div className="profile__meta">
-                                            <h3>Username</h3>
-                                            <span>FlixGo ID: 23562</span>
+                                            <h3>{user.lastName} {user.firstName}</h3>
+                                            <span>FlixGo ID: {user.id}</span>
                                         </div>
                                     </div>
 
@@ -67,11 +76,17 @@ const Profile = (props) => {
                                             </ul>
                                         </div>
                                     </div>
-
-                                    <button className="profile__logout" type="button">
+                                    <button className="profile__logout" onClick={logout}>
                                         <i className="icon ion-ios-log-out"/>
                                         <span>Logout</span>
                                     </button>
+                                    {
+                                        user.role && (user.role.name === 'Admin' || user.role.name === 'Moderator') &&
+                                        <NavLink to={"/admin/dashboard"} className="header__sign-in active">
+                                            <i className="icon ion-ios-log-in"/>
+                                            <span>Admin Panel</span>
+                                        </NavLink>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -89,4 +104,8 @@ const Profile = (props) => {
     );
 };
 
-export default withRouter(Profile);
+const mapStateToProps = state => ({
+    user: state.system.user.data
+});
+
+export default connect(mapStateToProps)(withRouter(Profile));

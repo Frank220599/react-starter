@@ -16,13 +16,12 @@ const AllMovies = (props) => {
         if (query.year) {
             setFilters({
                 ...filters,
-                year: {between: [query.year[0], query.year[1]]}
+                releaseYear: {between: [query.year[0], query.year[1]]}
             })
         } else {
             setFilters({})
         }
     }, [props.location.search]);
-    console.log(filters);
     const paginate = (page) => {
         const {history, location} = props;
         const query = qs.parse(location.search);
@@ -44,7 +43,8 @@ const AllMovies = (props) => {
                     <div className="row">
                         <EntityContainer.All
                             entity={'movies'}
-                            name={'All'} url={'/movies'}
+                            name={'All'}
+                            url={'/movies'}
                             params={{
                                 page: query.page,
                                 limit: 12,
@@ -56,15 +56,17 @@ const AllMovies = (props) => {
                                 <>
                                     {isFetched && items.map(movie => (
                                         <MovieItem.Ordinary
+                                            id={movie.id}
                                             key={movie.id}
                                             title={movie.title}
                                             cover={movie.cover}
+                                            rating={movie.rating}
                                         />
                                     ))}
                                     {!isFetched && [...new Array(12)].map(() => (
                                         <MovieLoader/>
                                     ))}
-                                    {isFetched && <Pagination paginate={paginate} meta={meta}/>}
+                                    {isFetched && meta.pageCount > 1 && <Pagination paginate={paginate} meta={meta}/>}
                                 </>
                             )}
                         </EntityContainer.All>

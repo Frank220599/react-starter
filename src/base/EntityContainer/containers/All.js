@@ -34,7 +34,6 @@ class All extends Component {
     render() {
 
         const {items, isFetched, meta, children} = this.props;
-
         return children({items, meta, isFetched});
     }
 }

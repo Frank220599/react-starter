@@ -26,11 +26,14 @@ import Comments from "./pages/Admin/Comments";
 import Users from "./pages/Admin/Users";
 import AddMovie from "./pages/Admin/AddMovie";
 import Test from "./pages/Test";
+import Search from "./pages/Main/Search";
+import {connect} from "react-redux";
 
 
 const mainRoutes = [
     {path: '/', exact: true, component: Home},
     {path: '/privacy', exact: true, component: Privacy},
+    {path: '/search', exact: true, component: Search},
     {path: '/pricing', exact: true, component: Pricing},
     {path: '/user/profile/:section', exact: true, component: Profile},
     {path: '/auth/forgot-password', exact: true, component: ForgotPassword, layout: false},
@@ -55,7 +58,7 @@ const adminRoutes = [
 ];
 
 
-const AppRoutes = ({store}) => (
+const AppRoutes = ({store, user}) => (
     <Router>
         <App>
             <Switch>
@@ -71,14 +74,16 @@ const AppRoutes = ({store}) => (
                         exact={route.exact}
                     />
                 ))}
-                {adminRoutes.map((route, key) => (
-                    <Route
-                        key={key}
-                        path={route.path}
-                        component={AdminLayout(ScrollToTopOnMount(route.component))}
-                        exact={route.exact}
-                    />
-                ))}
+                {user.isFetched && user.isAuthenticated && user.data.role.name === "Admin" &&
+                    adminRoutes.map((route, key) => (
+                        <Route
+                            key={key}
+                            path={route.path}
+                            component={AdminLayout(ScrollToTopOnMount(route.component))}
+                            exact={route.exact}
+                        />
+                    ))
+                }
                 <Route path={'/test'} component={Test}/>
                 <Route component={Error}/>
             </Switch>
@@ -86,4 +91,8 @@ const AppRoutes = ({store}) => (
     </Router>
 );
 
-export default AppRoutes
+const mapStateToProps = state => ({
+    user: state.system.user
+});
+
+export default connect(mapStateToProps)(AppRoutes)

@@ -18,7 +18,7 @@ const Sidebar = () => {
                     <p>John Doe</p>
                 </div>
 
-                <button className="sidebar__user-btn" type="button">
+                <button className="sidebar__user-btn" type="button" >
                     <i className="icon ion-ios-log-out"/>
                 </button>
             </div>
@@ -73,20 +73,10 @@ const Sidebar = () => {
                         <i className="icon ion-ios-star-half"/> Reviews
                     </NavLink>
                 </li>
-
-                {/*<li className="sidebar__nav-item">*/}
-                {/*    <a href="reviews.html" className="sidebar__nav-link"><i*/}
-                {/*        className="icon ion-ios-trash"/> Add item</a>*/}
-                {/*</li>*/}
-                {/*<li className="sidebar__nav-item">*/}
-                {/*    <a href="reviews.html" className="sidebar__nav-link"><i*/}
-                {/*        className="icon ion-ios-trash"/> Edit user</a>*/}
-                {/*</li>*/}
-
             </ul>
 
-            <div className="sidebar__copyright">© 2019 FlixGo. <br/>Create by <a
-                href="https://themeforest.net/user/dmitryvolkov/portfolio" target="_blank">Dmitry Volkov</a></div>
+            <div className="sidebar__copyright">© 2020 FlixGo. <br/>Create by <a
+                href="https://themeforest.net/user/dmitryvolkov/portfolio" target="_blank">Zokirov Farrukh</a></div>
         </div>
     );
 };

@@ -1,7 +1,11 @@
 import React, {useState} from 'react';
-import {MovieItem} from "../../../components/Main/MovieItem";
 import classnames from 'classnames'
 import {Transition} from 'react-transition-group'
+
+import NewReleases from "./NewReleases";
+import Cartoons from "./Cartoons";
+import Movies from "./Movies";
+import TvSeries from "./TvSeries";
 
 
 const NewItemsTab = () => {
@@ -18,6 +22,23 @@ const NewItemsTab = () => {
         entered: {opacity: 1},
         exiting: {opacity: 1},
         exited: {opacity: 0},
+    };
+
+    const renderTabContent = tabName => {
+        switch (tabName) {
+            case "NEW RELEASES": {
+                return <NewReleases/>
+            }
+            case "MOVIES": {
+                return <Movies/>
+            }
+            case "CARTOONS": {
+                return <Cartoons/>
+            }
+            case "TV SERIES": {
+                return <TvSeries/>
+            }
+        }
     };
     const TabButtons = () => {
         return (
@@ -59,7 +80,7 @@ const NewItemsTab = () => {
                 <div className="tab-content">
                     {
                         links.map((link, index) => (
-                            <Transition in={isOpen[index]}>
+                            <Transition in={isOpen[index]} timeout={30} key={index}>
                                 {(state) => (
                                     <div
                                         style={{
@@ -69,11 +90,7 @@ const NewItemsTab = () => {
                                         className={classnames(["tab-pane fade", {'show active': isOpen[index]}])}
                                     >
                                         <div className="row">
-                                            {
-                                                [...new Array(5)].map(() => {
-                                                    return !index ? <MovieItem.Full/> : <MovieItem.Ordinary/>
-                                                })
-                                            }
+                                            {renderTabContent(link)}
                                         </div>
                                     </div>
                                 )}

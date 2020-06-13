@@ -44,8 +44,7 @@ const Footer = () => {
                     </div>
                     <div className="col-12">
                         <div className="footer__copyright">
-                            <small>© 2018 FlixGo. Create by Zokirov Farrux</small>
-
+                            <small>© 2020 FlixGo. Create by Zokirov Farrukh</small>
                             <ul>
                                 <li><a href="privacy.html">Terms of Use</a></li>
                                 <li><a href="privacy.html">Privacy Policy</a></li>

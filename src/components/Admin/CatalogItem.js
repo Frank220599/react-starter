@@ -1,6 +1,7 @@
 import React from 'react';
+import {NavLink} from "react-router-dom";
 
-const CatalogItem = ({id, title, rating, views,}) => {
+const CatalogItem = ({id, title, rating, views, createdAt, status, onSetStatus, onDelete}) => {
     return (
         <tr>
             <td>
@@ -10,8 +11,8 @@ const CatalogItem = ({id, title, rating, views,}) => {
                 <div className="main__table-text">{title}</div>
             </td>
             <td>
-                <div className="main__table-text main__table-text--rate"><i
-                    className="icon ion-ios-star"/> {rating}
+                <div className="main__table-text main__table-text--rate">
+                    <i className="icon ion-ios-star"/> {rating}
                 </div>
             </td>
             <td>
@@ -21,27 +22,26 @@ const CatalogItem = ({id, title, rating, views,}) => {
                 <div className="main__table-text">{views}</div>
             </td>
             <td>
-                <div className="main__table-text main__table-text--green">Visible</div>
+                <div
+                    className={`main__table-text main__table-text--${status ? 'green' : 'red'}`}>{status ? 'Visible' : 'Hidden'}</div>
             </td>
             <td>
-                <div className="main__table-text">24 Oct 2019</div>
+                <div className="main__table-text">{createdAt}</div>
             </td>
             <td>
                 <div className="main__table-btns">
-                    <a href="#modal-status"
-                       className="main__table-btn main__table-btn--banned open-modal">
+                    <span onClick={onSetStatus} className="main__table-btn main__table-btn--banned open-modal">
                         <i className="icon ion-ios-lock"/>
-                    </a>
-                    <a href="#" className="main__table-btn main__table-btn--view">
+                    </span>
+                    <NavLink to={`/movies/${id}`} className="main__table-btn main__table-btn--view">
                         <i className="icon ion-ios-eye"/>
-                    </a>
-                    <a href="#" className="main__table-btn main__table-btn--edit">
+                    </NavLink>
+                    <span className="main__table-btn main__table-btn--edit">
                         <i className="icon ion-ios-create"/>
-                    </a>
-                    <a href="#modal-delete"
-                       className="main__table-btn main__table-btn--delete open-modal">
+                    </span>
+                    <span onClick={onDelete} className="main__table-btn main__table-btn--delete open-modal">
                         <i className="icon ion-ios-trash"/>
-                    </a>
+                    </span>
                 </div>
             </td>
         </tr>
