@@ -1,16 +1,47 @@
 import React from 'react';
+import {Formik, Form as FormikForm, Field} from "formik";
 import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
 
-const Form = ({user}) => {
+import {CommentCreate} from "../../../store/actions/system";
+
+const Form = ({user, id, CommentCreate}) => {
     return (
-        <form action="#" className="form">
-<textarea id="text" name="text" className="form__textarea"
-          placeholder="Add comment"/>
-            {user.isAuthenticated
-                ? <button type="submit" className="form__btn">Send</button>
-                : <button type="button" className="form__btn" disabled>sign in to leave comment</button>
+        <Formik
+            initialValues={{text: ''}}
+            validate={values => {
+                const errors = {};
+                if (!values.text) {
+                    errors.text = 'Required';
+                }
+                return errors;
+            }}
+            onSubmit={(values, {resetForm}) => {
+                CommentCreate({
+                    movieId: id,
+                    text: values.text,
+                });
+
+                resetForm({})
+            }}
+        >
+            {() => (
+                <FormikForm className="form">
+                    <Field
+                        component={'textarea'}
+                        name="text"
+                        className="form__textarea"
+                        placeholder="Add comment"
+                    />
+                    {
+                        user.isAuthenticated
+                            ? <button type="submit" className="form__btn">Send</button>
+                            : <button type="button" className="form__btn" disabled>sign in to leave comment</button>
+                    }
+                </FormikForm>
+            )
             }
-        </form>
+        </Formik>
     );
 };
 
@@ -18,4 +49,8 @@ const mapStateToProps = state => ({
     user: state.system.user
 });
 
-export default connect(mapStateToProps)(Form);
+const mapDispatchToProps = dispatch => bindActionCreators({
+    CommentCreate
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);

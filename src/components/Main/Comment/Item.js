@@ -2,7 +2,7 @@ import React from 'react';
 
 const Item = ({text, author, like, dislike}) => {
     return (
-        <li className="comments__item comments__item--answer">
+        <li className="comments__item">
             <div className="comments__autor">
                 <img className="comments__avatar" src={require('../../../assets/images/user.svg')} alt=""/>
                 <span className="comments__name">{author}</span>

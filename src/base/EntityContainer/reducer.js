@@ -111,6 +111,22 @@ export default (state = initialState, action) => {
                 }
             }
         }
+        case EntityActions.AppendItem.SUCCESS: {
+            const {entity, name, id} = action.payload;
+            return {
+                ...state,
+                [entity]: {
+                    ...get(state, entity, {}),
+                    [name]: {
+                        ...get(state, `${entity}.${name}`, {}),
+                        ids: [
+                            ...state[entity][name].ids,
+                            id
+                        ],
+                    }
+                }
+            }
+        }
 
         default:
             return state

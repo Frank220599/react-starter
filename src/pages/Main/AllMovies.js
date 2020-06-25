@@ -13,10 +13,12 @@ const AllMovies = (props) => {
     const [filters, setFilters] = useState({});
     useEffect(() => {
         const query = qs.parse(location.search);
-        if (query.year) {
+        if (query.year || query.rating) {
             setFilters({
-                ...filters,
-                releaseYear: {between: [query.year[0], query.year[1]]}
+                genre: {id: query.genre},
+                releaseYear: {from: query.year[0], to: query.year[1]},
+                rating: {from: query.rating[0], to: query.rating[1]},
+                quality: {id: query.quality}
             })
         } else {
             setFilters({})
@@ -54,6 +56,12 @@ const AllMovies = (props) => {
                         >
                             {({items, isFetched, meta}) => (
                                 <>
+                                    {
+                                        isFetched && items.length === 0 &&
+                                            <div>
+                                                <h1 style={{color: '#fff'}}>No items found!</h1>
+                                            </div>
+                                    }
                                     {isFetched && items.map(movie => (
                                         <MovieItem.Ordinary
                                             id={movie.id}

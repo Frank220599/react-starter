@@ -3,6 +3,8 @@ import {Field, Form, withFormik, ErrorMessage} from "formik";
 import * as Yup from "yup";
 import Select from "react-select"
 import {EntityContainer} from "../base/EntityContainer";
+import {MovieCreate} from "../store/actions/system";
+import {connect} from "react-redux";
 
 const customStyles = {
     menu: (provided, state) => ({
@@ -51,10 +53,13 @@ let AddMovieForm = ({setFieldValue}) => {
                         <div className="col-12 col-sm-6 col-md-12">
                             <div className="form__img">
                                 <label for="cover">Upload cover (270 x 400)</label>
-                                <Field
+                                <input
                                     id="cover"
                                     name="cover"
                                     type="file"
+                                    onChange={(event) => {
+                                        setFieldValue('cover', event.target.files[0])
+                                    }}
                                     accept=".png, .jpg, .jpeg"
                                 />
                                 <img id="form__img" src="#" alt=" "/>
@@ -351,6 +356,7 @@ AddMovieForm = withFormik({
     mapPropsToValues: (props) => {
         return ({
             title: '',
+            cover: '',
             description: '',
             releaseYear: '',
             age: '',
@@ -361,19 +367,26 @@ AddMovieForm = withFormik({
         })
     },
     handleSubmit: (values, {props: {dispatch, user, history}, setSubmitting, resetForm}) => {
-        console.log(values)
+        const genres = values.genres.map(genre => genre.value);
+        const nomalizedValues = {
+            ...values,
+            genres
+        };
         let formData = new FormData();
-        Object.keys(values).forEach(key => {
-            if (values[key] instanceof Array) {
-                values[key].forEach(i => {
+        Object.keys(nomalizedValues).forEach(key => {
+            if (nomalizedValues[key] instanceof Array) {
+                nomalizedValues[key].forEach(i => {
                     formData.append(`${key}[]`, i);
                 });
             } else {
-                formData.append(key, values[key]);
+                formData.append(key, nomalizedValues[key]);
             }
         });
+        dispatch(
+            MovieCreate(formData)
+        )
     }
 })(AddMovieForm);
 
 
-export default AddMovieForm;
+export default connect()(AddMovieForm);

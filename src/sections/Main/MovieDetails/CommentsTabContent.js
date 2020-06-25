@@ -26,7 +26,7 @@ const CommentsTabContent = ({id}) => {
                             )}
                         </EntityContainer.All>
                     </ul>
-                    <Comment.Form/>
+                    <Comment.Form id={id}/>
                 </div>
             </div>
         </div>

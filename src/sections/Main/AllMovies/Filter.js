@@ -10,6 +10,8 @@ import {withRouter} from "react-router";
 const Filter = (props) => {
 
     const [isOpen, setIsOpen] = useState({});
+    const [genre, setGenre] = useState();
+    const [quality, setQuality] = useState();
     const [year, setYear] = useState({from: 2005, to: 2015});
     const [rating, setRating] = useState({from: 2.5, to: 8.6});
     const dropdownHandler = index => {
@@ -18,12 +20,22 @@ const Filter = (props) => {
     const applyFilters = () => {
         const {history, location} = props;
         const query = qs.parse(location.search);
-        const search = {...query, year: [year.from, year.to]};
+        const search = {
+            ...query,
+            year: [year.from, year.to],
+            rating: [rating.from, rating.to],
+            genre: genre.id,
+            quality: quality.id
+        };
 
         history.push({
             search: qs.stringify(search)
         });
     };
+
+    const resetFilters = () => {
+        props.history.push({search: null})
+    }
     return (
         <div className="filter">
             <div className="container">
@@ -34,16 +46,36 @@ const Filter = (props) => {
                                 <div className={cx(["filter__item ", {show: isOpen[1]}])} id="filter__genre">
                                     <span className="filter__item-label">GENRE:</span>
                                     <div
+                                        style={{width: 120}}
                                         className="filter__item-btn"
                                         onClick={() => dropdownHandler(1)}
                                     >
-                                        <input type="button" value="Action/Adventure"/>
+                                        <input type="button" value={genre ? genre.name : 'Select genre'}/>
                                         <span/>
                                     </div>
                                     <ul className="filter__item-menu">
-                                        <EntityContainer.All entity={'genres'} name={'All'} url={'/genres'}>
+                                        <EntityContainer.All
+                                            entity={'genres'}
+                                            name={'All'}
+                                            url={'/genres'}
+                                            params={{sort: 'id'}}
+                                        >
                                             {({items, isFetched}) => (
-                                                items.map(genre => <li key={genre.id}>{genre.name}</li>).reverse()
+                                                <>
+                                                    {
+                                                        isFetched && items.map((genre, index) => {
+                                                            return (
+                                                                <li
+                                                                    key={genre.id}
+                                                                    onClick={() => setGenre(genre)}
+                                                                >
+                                                                    {genre.name}
+                                                                </li>
+                                                            )
+
+                                                        })
+                                                    }
+                                                </>
                                             )}
                                         </EntityContainer.All>
                                     </ul>
@@ -51,15 +83,38 @@ const Filter = (props) => {
 
                                 <div className={cx(["filter__item ", {show: isOpen[2]}])} id="filter__quality">
                                     <span className="filter__item-label">QUALITY:</span>
-                                    <div className="filter__item-btn" onClick={() => dropdownHandler(2)}>
-                                        <input type="button" value="HD 1080"/>
+                                    <div style={{width: 120}}
+                                         className="filter__item-btn"
+                                         onClick={() => dropdownHandler(2)}
+                                    >
+                                        <input type="button" value={quality ? quality.name : 'Select quality'}/>
                                         <span/>
                                     </div>
                                     <ul className="filter__item-menu dropdown-menu scrollbar-dropdown">
-                                        <li>HD 1080</li>
-                                        <li>HD 720</li>
-                                        <li>DVD</li>
-                                        <li>TS</li>
+                                        <EntityContainer.All
+                                            entity={'qualities'}
+                                            name={'All'}
+                                            url={'/qualities'}
+                                            params={{sort: 'id'}}
+                                        >
+                                            {({items, isFetched}) => (
+                                                <>
+                                                    {
+                                                        isFetched && items.map((quality, index) => {
+                                                            return (
+                                                                <li
+                                                                    key={quality.id}
+                                                                    onClick={() => setQuality(quality)}
+                                                                >
+                                                                    {quality.name}
+                                                                </li>
+                                                            )
+
+                                                        })
+                                                    }
+                                                </>
+                                            )}
+                                        </EntityContainer.All>
                                     </ul>
                                 </div>
 
@@ -129,7 +184,7 @@ const Filter = (props) => {
                                 </div>
                             </div>
                             <button onClick={applyFilters} className="filter__btn">apply filter</button>
-                            <button onClick={applyFilters} className="filter__btn">Reset Filter</button>
+                            <button onClick={resetFilters} className="filter__btn">Reset Filter</button>
                         </div>
                     </div>
                 </div>

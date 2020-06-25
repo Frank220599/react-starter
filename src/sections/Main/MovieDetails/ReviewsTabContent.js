@@ -13,16 +13,21 @@ const ReviewsTabContent = ({id}) => {
                             entity={'reviews'}
                             name={'All'}
                             url={'/reviews'}
-                            params={{filter: {movieId: id}}}
+                            params={{filter: {movieId: id}, include: 'user'}}
                         >
                             {({items, isFetched, meta}) => (
-                                items.map((comment, index) => (
-                                    <Review.Item/>
+                                items.map((review, index) => (
+                                    <Review.Item
+                                        title={review.title}
+                                        text={review.text}
+                                        author={review.user.firstName + " " + review.user.lastName}
+                                        rating={review.rating}
+                                    />
                                 ))
                             )}
                         </EntityContainer.All>
                     </ul>
-                    <Review.Form/>
+                    <Review.Form id={id}/>
                 </div>
             </div>
         </div>

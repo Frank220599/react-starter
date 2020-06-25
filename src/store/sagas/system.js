@@ -33,7 +33,7 @@ function* SigninForm(action) {
             type: Constants.SIGNIN_FAILURE,
             payload: ExtractErrors(error)
         });
-        yield call(action.errorCb);
+        yield call(action.errorCb, error);
     }
 }
 
@@ -52,7 +52,7 @@ function* SignupForm(action) {
             type: Constants.SIGNUP_FAILURE,
             payload: ExtractErrors(error)
         });
-        yield call(action.errorCb);
+        yield call(action.errorCb, error);
     }
 }
 
@@ -73,7 +73,7 @@ function* Authenticate(action) {
             type: Constants.AUTHENTICATE_FAILURE,
             payload: ExtractErrors(error)
         });
-        yield call(action.errorCb);
+        yield call(action.errorCb, error);
     }
 }
 
@@ -89,7 +89,7 @@ function* Logout(action) {
             type: Constants.LOGOUT_FAILURE,
             payload: 'failure'
         });
-        yield call(action.errorCb);
+        yield call(action.errorCb, error);
     }
 }
 
@@ -111,7 +111,7 @@ function* UserUpdate(action) {
             type: Constants.USER_UPDATE_FAILURE,
             payload: error
         });
-        yield call(action.errorCb);
+        yield call(action.errorCb, error);
     }
 }
 
@@ -136,7 +136,7 @@ function* UserSetStatus(action) {
             type: Constants.USER_SET_STATUS_FAILURE,
             payload: error
         });
-        yield call(action.errorCb);
+        yield call(action.errorCb, error);
     }
 }
 
@@ -161,7 +161,7 @@ function* MovieSetStatus(action) {
             type: Constants.MOVIE_SET_STATUS_FAILURE,
             payload: error
         });
-        yield call(action.errorCb);
+        yield call(action.errorCb, error);
     }
 }
 
@@ -180,7 +180,7 @@ function* ChangePassword(action) {
             type: Constants.PASSWORD_CHANGED_FAILURE,
             payload: error
         });
-        yield call(action.errorCb);
+        yield call(action.errorCb, error);
     }
 }
 
@@ -199,7 +199,7 @@ function* ResetPassword(action) {
             type: Constants.RESET_PASSWORD_FAILURE,
             payload: error
         });
-        yield call(action.errorCb);
+        yield call(action.errorCb, error);
     }
 }
 
@@ -224,7 +224,7 @@ function* UserDelete(action) {
             type: Constants.USER_DELETE_FAILURE,
             payload: error
         });
-        yield call(action.errorCb);
+        yield call(action.errorCb, error);
     }
 }
 
@@ -249,7 +249,7 @@ function* MovieDelete(action) {
             type: Constants.MOVIE_DELETE_FAILURE,
             payload: error
         });
-        yield call(action.errorCb);
+        yield call(action.errorCb, error);
     }
 }
 
@@ -274,7 +274,91 @@ function* CommentDelete(action) {
             type: Constants.COMMENT_DELETE_FAILURE,
             payload: error
         });
-        yield call(action.errorCb);
+        yield call(action.errorCb, error);
+    }
+}
+
+function* CommentCreate(action) {
+    try {
+        const {data} = yield call(api.request.post, '/comments', action.payload);
+
+        const normalized = normalize(data, [EntitySchema('comments')]);
+
+        yield put(Load.success(normalized.entities));
+
+        yield put(EntityActions.AppendItem.success({
+            entity: 'comments',
+            name: 'All',
+            id: normalized.result[0],
+            appendIds: true,
+            params: {},
+        }))
+
+        yield put({
+            type: Constants.COMMENT_CREATE_SUCCESS,
+            payload: data
+        });
+
+        yield call(action.cb);
+
+    } catch (error) {
+        yield put({
+            type: Constants.COMMENT_CREATE_FAILURE,
+            payload: error
+        });
+        yield call(action.errorCb, error);
+    }
+}
+
+function* ReviewsCreate(action) {
+    try {
+        const {data} = yield call(api.request.post, '/reviews', action.payload);
+
+        const normalized = normalize(data, [EntitySchema('reviews')]);
+
+        yield put(Load.success(normalized.entities));
+
+        yield put(EntityActions.AppendItem.success({
+            entity: 'reviews',
+            name: 'All',
+            id: normalized.result[0],
+            appendIds: true,
+            params: {},
+        }))
+
+        yield put({
+            type: Constants.REVIEW_CREATE_SUCCESS,
+            payload: data
+        });
+
+        yield call(action.cb);
+
+    } catch (error) {
+        yield put({
+            type: Constants.REVIEW_CREATE_FAILURE,
+            payload: error
+        });
+        yield call(action.errorCb, error);
+    }
+}
+
+function* MovieCreate(action) {
+    try {
+        const {data} = yield call(api.request.post, '/movies', action.payload);
+
+        yield put({
+            type: Constants.MOVIE_CREATE_SUCCESS,
+            payload: data
+        });
+
+        yield call(action.cb);
+
+    } catch (error) {
+        yield put({
+            type: Constants.MOVIE_CREATE_FAILURE,
+            payload: error
+        });
+        yield call(action.errorCb, error);
     }
 }
 
@@ -293,5 +377,8 @@ export default function* root() {
         takeLatest(Constants.COMMENT_DELETE_REQUEST, CommentDelete),
         takeLatest(Constants.MOVIE_SET_STATUS_REQUEST, MovieSetStatus),
         takeLatest(Constants.MOVIE_DELETE_REQUEST, MovieDelete),
+        takeLatest(Constants.MOVIE_CREATE_REQUEST, MovieCreate),
+        takeLatest(Constants.COMMENT_CREATE_REQUEST, CommentCreate),
+        takeLatest(Constants.REVIEW_CREATE_REQUEST, ReviewsCreate),
     ]);
 }
