@@ -40,7 +40,7 @@
     "redux-saga-routines": "3.2.2",
     "require-context": "1.1.0",
     "reselect": "4.0.0",
-    "swiper": "5.3.6",
+    "swiper": "6.5.1",
     "wnumb": "1.2.0",
     "yup": "0.28.5"
   },
